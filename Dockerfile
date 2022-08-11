@@ -12,7 +12,8 @@ RUN apk add --no-cache --update git gcc musl-dev linux-headers ca-certificates o
     sed -i 's|# tls-port: 853|tls-port: 853|g' doc/example.conf && \
     sed -i 's|# https-port: 443|https-port: 443|g' doc/example.conf && \
     sed -i 's|# username: "unbound"|username: "root"|g' doc/example.conf && \
-    wget https://www.internic.net/domain/named.root -O /src/named.root
+    wget https://www.internic.net/domain/named.root -O /src/named.root && \
+    openssl req  -nodes -new -x509 -subj '/CN=*' -sha256 -keyout /etc/ssl/privkey.pem -out /etc/ssl/fullchain.pem -days 365000
     
 FROM busybox:1.35.0
 COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
