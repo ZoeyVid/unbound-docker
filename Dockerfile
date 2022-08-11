@@ -7,18 +7,13 @@ RUN apk add --no-cache --update git gcc musl-dev linux-headers ca-certificates o
     cd /src && \
     ./configure && \
     make && \
-    sed -i 's|# tls-service-key: "path/to/privatekeyfile.key"|tls-service-key: "/etc/ssl/privkey.pem"|g' doc/example.conf && \
-    sed -i 's|# tls-service-pem: "path/to/publiccertfile.pem"|tls-service-pem: "/etc/ssl/fullchain.pem"|g' doc/example.conf && \
-    sed -i 's|# tls-port: 853|tls-port: 853|g' doc/example.conf && \
-    sed -i 's|# https-port: 443|https-port: 443|g' doc/example.conf && \
     sed -i 's|# username: "unbound"|username: "root"|g' doc/example.conf && \
-    wget https://www.internic.net/domain/named.root -O /src/named.root && \
-    openssl req  -nodes -new -x509 -subj '/CN=*' -sha256 -keyout /etc/ssl/privkey.pem -out /etc/ssl/fullchain.pem -days 365000
+    sed -i 's|# interface: 192.0.2.153|interface: 0.0.0.0|g' doc/example.conf && \
+    sed -i 's|# interface: 192.0.2.154|interface: ::0|g' doc/example.conf && \
+    wget https://www.internic.net/domain/named.root -O /src/named.root
     
 FROM busybox:1.35.0
 COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
-COPY --from=build /etc/ssl/privkey.pem /etc/ssl/privkey.pem
-COPY --from=build /etc/ssl/fullchain.pem /etc/ssl/fullchain.pem
 
 COPY --from=build /src/unbound /usr/local/bin/unbound
 COPY --from=build /src/doc/example.conf /usr/local/etc/unbound/unbound.conf
