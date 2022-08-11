@@ -10,6 +10,8 @@ RUN apk add --no-cache --update git gcc musl-dev linux-headers ca-certificates o
     sed -i 's|# username: "unbound"|username: "root"|g' doc/example.conf && \
     sed -i 's|# interface: 192.0.2.153|interface: 0.0.0.0|g' doc/example.conf && \
     sed -i 's|# interface: 192.0.2.154|interface: ::0|g' doc/example.conf && \
+    sed -i 's|# access-control: 0.0.0.0/0 refuse|access-control: 0.0.0.0/0 allow_snoop|g' doc/example.conf && \
+    sed -i 's|access-control: 127.0.0.0/8 allow|access-control: ::0/0 allow_snoop|g' doc/example.conf && \
     wget https://www.internic.net/domain/named.root -O /src/named.root
     
 FROM busybox:1.35.0
