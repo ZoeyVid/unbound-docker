@@ -2,7 +2,7 @@ FROM alpine:3.16.2 as build
 
 ARG UNBOUND_VERSION=release-1.16.2
 
-RUN apk add --no-cache --update git gcc musl-dev linux-headers ca-certificates openssl-dev expat-dev make openssl && \
+RUN apk add --no-cache --update git gcc musl-dev linux-headers ca-certificates openssl-dev expat-dev make openssl byacc && \
     git clone --recursive https://github.com/NLnetLabs/unbound --branch ${UNBOUND_VERSION} /src && \
     cd /src && \
     /src/configure && \
