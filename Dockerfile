@@ -19,7 +19,7 @@ FROM busybox:1.35.0
 COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 
 COPY --from=build /src/unbound /usr/local/bin/unbound
-COPY --from=build /src/root.key /usr/local/etc/unbound/root.key
+#COPY --from=build /src/root.key /usr/local/etc/unbound/root.key
 COPY --from=build /src/doc/example.conf /usr/local/etc/unbound/unbound.conf
 COPY --from=build /src/named.root /var/lib/unbound/root.hints
 COPY --from=build /lib/libssl.so.1.1 /lib/libssl.so.1.1
