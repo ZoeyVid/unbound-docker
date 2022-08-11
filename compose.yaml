@@ -5,11 +5,20 @@ services:
         image: adguard/adguardhome
         restart: always
         ports:
-        - "80:80/tcp"
-        - "443:443/tcp"
-        - "443:443/udp"
-        - "853:853/tcp"
-        - "853:853/udp"
+        - "80:80/tcp" # http web
+        - "443:443/tcp" # https web / DoH
+        - "443:443/udp" # https web (udp) / DoH
+#        - "53:53/tcp" # plain DNS
+#        - "53:53/udp" # plain DNS
+        - "853:853/tcp" # DNS-over-TLS
+        - "853:853/udp" # DNS-over-QUIC
+#        - "784:784/udp" # DNS-over-QUIC
+#        - "8853:8853/udp" # DNS-over-QUIC
+#        - "5443:5443/tcp" # DNSCrypt
+#        - "5443:5443/udp" # DNSCrypt
+#        - "67:67/udp" # DHCP server
+#        - "68:68/udp" # DHCP server
+        - "3000:3000/tcp" # Only needed for the first time Setup
         volumes:
         - "/opt/adgh/work:/opt/adguardhome/work"
         - "/opt/adgh/conf:/opt/adguardhome/conf"
