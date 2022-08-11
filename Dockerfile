@@ -17,6 +17,8 @@ RUN apk add --no-cache --update git gcc musl-dev linux-headers ca-certificates o
     
 FROM busybox:1.35.0
 COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+COPY --from=build /etc/ssl/privkey.pem /etc/ssl/privkey.pem
+COPY --from=build /etc/ssl/fullchain.pem /etc/ssl/fullchain.pem
 
 COPY --from=build /src/unbound /usr/local/bin/unbound
 COPY --from=build /src/doc/example.conf /usr/local/etc/unbound/unbound.conf
