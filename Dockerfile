@@ -5,7 +5,7 @@ ARG UNBOUND_VERSION=release-1.16.2
 RUN apk add --no-cache --update git gcc musl-dev linux-headers ca-certificates openssl-dev expat-dev make openssl && \
     git clone --recursive https://github.com/NLnetLabs/unbound --branch ${UNBOUND_VERSION} /src && \
     cd /src && \
-    ./configure  && \
+    ./configure && \
     make && \
     sed -i 's|# tls-service-key: "path/to/privatekeyfile.key"|tls-service-key: "/etc/ssl/privkey.pem"|g' doc/example.conf && \
     sed -i 's|# tls-service-pem: "path/to/publiccertfile.pem"|tls-service-pem: "/etc/ssl/fullchain.pem"|g' doc/example.conf && \
