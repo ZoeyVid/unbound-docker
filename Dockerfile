@@ -25,7 +25,7 @@ COPY --from=build /src/doc/example.conf /usr/local/etc/unbound/unbound.conf
 COPY --from=build /src/named.root /var/lib/unbound/root.hints
 COPY --from=build /lib/libssl.so.1.1 /lib/libssl.so.1.1
 COPY --from=build /lib/libcrypto.so.1.1 /lib/libcrypto.so.1.1
-COPY --from=build /lib/ld-musl-x86_64.so.1 /lib/ld-musl-x86_64.so.1
+COPY --from=build /lib/ld-musl-*.so.1 /lib/
 
 LABEL org.opencontainers.image.source="https://github.com/SanCraftDev/unbound-docker"
 ENTRYPOINT ["unbound"]
