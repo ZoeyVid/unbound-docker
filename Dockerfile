@@ -2,7 +2,7 @@ FROM alpine:3.16.2 as build
 
 ARG UNBOUND_VERSION=release-1.16.2
 
-RUN apk add --no-cache --update git gcc musl-dev linux-headers ca-certificates openssl-dev expat-dev make openssl byacc && \
+RUN apk add --no-cache git gcc musl-dev linux-headers ca-certificates openssl-dev expat-dev make openssl byacc && \
     git clone --recursive https://github.com/NLnetLabs/unbound --branch ${UNBOUND_VERSION} /src && \
     cd /src && \
     /src/configure && \
@@ -16,17 +16,16 @@ RUN apk add --no-cache --update git gcc musl-dev linux-headers ca-certificates o
     wget https://www.internic.net/domain/named.root -O /src/named.root
 RUN /src/unbound-anchor -a /src/root.key; exit 0
     
-FROM busybox:1.35.0
-COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+FROM alpine:3.16.2
+RUN apk add --no-cache ca-certificates bind-tools
 
 COPY --from=build /src/unbound /usr/local/bin/unbound
 COPY --from=build /src/root.key /usr/local/etc/unbound/root.key
 COPY --from=build /src/doc/example.conf /usr/local/etc/unbound/unbound.conf
 COPY --from=build /src/named.root /var/lib/unbound/root.hints
-COPY --from=build /lib/libssl.so.1.1 /lib/libssl.so.1.1
-COPY --from=build /lib/libcrypto.so.1.1 /lib/libcrypto.so.1.1
-COPY --from=build /lib/ld-musl-*.so.1 /lib/
 
 LABEL org.opencontainers.image.source="https://github.com/SanCraftDev/unbound-docker"
 ENTRYPOINT ["unbound"]
 CMD ["-d"]
+
+HEALTHCHECK CMD dig example.com @127.0.0.1 || exit 1
