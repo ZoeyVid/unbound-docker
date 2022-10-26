@@ -1,0 +1,36 @@
+name: dependency-updates
+
+on:
+  schedule:
+    - cron:  "0 */6 * * *"
+  workflow_dispatch:
+
+jobs:
+  unbound-update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: update unbound version
+        id: update
+        run: |
+          UNBOUND_VERSION="$(
+          git ls-remote --tags https://github.com/NLnetLabs/unbound \
+              | cut -d/ -f3 \
+              | sort -V \
+              | tail -1 \
+              | sed -E "s/\^\{\}//"
+          )"
+          sed -i "s|ARG UNBOUND_VERSION=.*|ARG UNBOUND_VERSION=$UNBOUND_VERSION|" ./Dockerfile
+          echo "version=$UNBOUND_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          signoff: true
+          delete-branch: true
+          commit-message: update unbound version to ${{ steps.update.outputs.version }}
+          branch: update-unbound-version
+          title: update unbound version to ${{ steps.update.outputs.version }}
+          body: update unbound version to ${{ steps.update.outputs.version }}
