@@ -6,7 +6,8 @@ RUN apk add --no-cache git gcc musl-dev linux-headers ca-certificates openssl-de
     git clone --recursive https://github.com/NLnetLabs/unbound --branch ${UNBOUND_VERSION} /src && \
     cd /src && \
     /src/configure && \
-    make && \
+    make
+RUN cd /src && \
     sed -i 's|# username: "unbound"|username: "root"|g' doc/example.conf && \
     sed -i 's|# interface: 192.0.2.153|interface: 0.0.0.0|g' doc/example.conf && \
     sed -i 's|# interface: 192.0.2.154|interface: ::0|g' doc/example.conf && \
