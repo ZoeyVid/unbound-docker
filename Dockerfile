@@ -15,7 +15,7 @@ RUN cd /src && \
     sed -i 's|# access-control: ::1 allow|access-control: ::0/0 allow_snoop|g' doc/example.conf && \
     sed -i 's|# auto-trust-anchor-file: "/usr/local/etc/unbound/root.key"|auto-trust-anchor-file: "/usr/local/etc/unbound/root.key"|g' doc/example.conf && \
     wget https://www.internic.net/domain/named.root -O /src/named.root
-RUN /src/unbound-anchor -a /src/root.key; exit 0
+RUN /src/unbound-anchor -a /src/root.key
     
 FROM alpine:3.16.2
 RUN apk add --no-cache ca-certificates bind-tools
