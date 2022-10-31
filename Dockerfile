@@ -15,12 +15,12 @@ RUN apk add --no-cache ca-certificates bind-tools
 COPY --from=build /src/unbound /usr/local/bin/unbound
 COPY --from=build /src/unbound-checkconf /usr/local/bin/unbound-checkconf
 
-COPY unbound.conf /etc/unbound/unbound.conf
-COPY --from=build /src/root.key /etc/unbound/root.key
-RUN wget https://www.internic.net/domain/named.root -O /etc/unbound/root.hints
+COPY unbound.conf /usr/local/etc/unbound/unbound.conf
+COPY --from=build /src/root.key /usr/local/etc/unbound/root.key
+RUN wget https://www.internic.net/domain/named.root -O /usr/local/etc/unbound/root.hints
 
 LABEL org.opencontainers.image.source="https://github.com/SanCraftDev/unbound-docker"
 ENTRYPOINT ["unbound"]
-CMD ["-dd", "-c", "/etc/unbound/unbound.conf"]
+CMD ["-dd"]
 
 HEALTHCHECK CMD dig example.com @127.0.0.1 || exit 1
