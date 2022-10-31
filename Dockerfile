@@ -15,8 +15,6 @@ RUN apk add --no-cache ca-certificates bind-tools
 COPY --from=build /src/unbound /usr/local/bin/unbound
 COPY --from=build /src/unbound-checkconf /usr/local/bin/unbound-checkconf
 
-RUN mkdir /etc/unbound
-
 COPY unbound.conf /etc/unbound/unbound.conf
 COPY --from=build /src/root.key /etc/unbound/root.key
 RUN wget https://www.internic.net/domain/named.root -O /etc/unbound/root.hints
