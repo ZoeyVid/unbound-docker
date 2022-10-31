@@ -20,5 +20,5 @@ RUN wget https://www.internic.net/domain/named.root -O /usr/local/etc/unbound/ro
 
 LABEL org.opencontainers.image.source="https://github.com/SanCraftDev/unbound-docker"
 ENTRYPOINT ["unbound"]
-CMD ["-dd", "-vv", "-c", "/usr/local/etc/unbound/unbound.conf"]
+CMD ["-d", "-c", "/usr/local/etc/unbound/unbound.conf"]
 HEALTHCHECK CMD dig example.com @127.0.0.1 || exit 1
