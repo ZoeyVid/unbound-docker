@@ -74,9 +74,7 @@ jobs:
         if: ${{ github.ref == 'refs/heads/develop' }}
         run: | 
          docker run --rm ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:${{ github.ref_name }} -V
-         docker run --rm ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:${{ github.ref_name }} -dd -vv -c /usr/local/etc/unbound/unbound.conf
          docker run --rm ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:${{ github.ref_name }} -V
-         docker run --rm ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:${{ github.ref_name }} -dd -vv -c /usr/local/etc/unbound/unbound.conf
 
       - name: Set PR-Number (PR)
         if: ${{ github.event_name == 'pull_request' }}
@@ -99,7 +97,6 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         run: | 
          docker run --rm ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:${{ steps.pr.outputs.pr }} -V
-         docker run --rm ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:${{ steps.pr.outputs.pr }} -dd -vv -c /usr/local/etc/unbound/unbound.conf
 
           
       - name: add comment (PR)
