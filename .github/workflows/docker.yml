@@ -5,10 +5,12 @@ on:
     branches:    
       - develop
     paths:
+      - unbound.conf
       - Dockerfile
       - .github/workflows/docker.yml
   pull_request:
     paths:
+      - unbound.conf
       - Dockerfile
       - .github/workflows/docker.yml
   workflow_dispatch:
