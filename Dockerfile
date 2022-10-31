@@ -18,7 +18,7 @@ COPY unbound.conf /etc/unbound/unbound.conf
 COPY --from=build /src/root.key /etc/unbound/root.key
 RUN wget https://www.internic.net/domain/named.root -O /etc/unbound/root.hints
 
-RUN unbound -dd -vv -c /etc/unbound/unbound.conf
+RUN unbound -dd -vv -c /etc/unbound/unbound.conf -checkconf
 
 LABEL org.opencontainers.image.source="https://github.com/SanCraftDev/unbound-docker"
 ENTRYPOINT ["unbound"]
