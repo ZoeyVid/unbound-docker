@@ -13,14 +13,10 @@ FROM alpine:3.16.2
 RUN apk add --no-cache ca-certificates bind-tools
 
 COPY --from=build /src/unbound /usr/local/bin/unbound
-COPY --from=build /src/unbound-checkconf /usr/local/bin/unbound-checkconf
 
 COPY unbound.conf /usr/local/etc/unbound/unbound.conf
 COPY --from=build /src/root.key /usr/local/etc/unbound/root.key
-RUN wget https://www.internic.net/domain/named.root -O /usr/local/etc/unbound/root.hints && \
-
-    unbound-checkconf -f /usr/local/etc/unbound/unbound.conf && \
-    rm -rf /usr/local/bin/unbound-checkconf
+RUN wget https://www.internic.net/domain/named.root -O /usr/local/etc/unbound/root.hints
 
 LABEL org.opencontainers.image.source="https://github.com/SanCraftDev/unbound-docker"
 ENTRYPOINT ["unbound"]
