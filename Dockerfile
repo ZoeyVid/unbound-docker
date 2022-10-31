@@ -12,7 +12,7 @@ RUN /src/unbound-anchor -a /src/root.key || if [ "$?" == "1" ]; then exit 0; els
 FROM alpine:3.16.2
 RUN apk add --no-cache ca-certificates bind-tools
 
-COPY --from=build /src/unbound  /usr/local/bin/unbound
+COPY --from=build /src/unbound /usr/local/bin/unbound
 
 COPY unbound.conf /etc/unbound/unbound.conf
 COPY --from=build /src/root.key /etc/unbound/root.key
