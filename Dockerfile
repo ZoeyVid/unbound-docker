@@ -19,11 +19,10 @@ COPY unbound.conf /usr/local/etc/unbound/unbound.conf
 COPY --from=build /src/root.key /usr/local/etc/unbound/root.key
 RUN wget https://www.internic.net/domain/named.root -O /usr/local/etc/unbound/root.hints && \
 
-    unbound -dd -vv -c /usr/local/etc/unbound/unbound.conf && \
     unbound-checkconf -f /usr/local/etc/unbound/unbound.conf && \
     rm -rf /usr/local/bin/unbound-checkconf
 
 LABEL org.opencontainers.image.source="https://github.com/SanCraftDev/unbound-docker"
 ENTRYPOINT ["unbound"]
-CMD ["-dd", "-c", "/usr/local/etc/unbound/unbound.conf"]
+CMD ["-dd", "-vv", "-c", "/usr/local/etc/unbound/unbound.conf"]
 HEALTHCHECK CMD dig example.com @127.0.0.1 || exit 1
