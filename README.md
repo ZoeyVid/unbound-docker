@@ -10,7 +10,7 @@ services:
         ports:
         - "80:80/tcp" # http web
         - "443:443/tcp" # https web / DoH
-        - "443:443/udp" # https web (udp) / DoH
+        - "443:443/udp" # https web (udp) / DoH3
 #        - "53:53/tcp" # plain DNS
 #        - "53:53/udp" # plain DNS
         - "853:853/tcp" # DNS-over-TLS
