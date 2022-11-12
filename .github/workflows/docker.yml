@@ -84,7 +84,6 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         run: | 
          docker run --rm ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:${{ steps.pr.outputs.pr }} -V
-
           
       - name: add comment (PR)
         uses: mshick/add-pr-comment@v2
