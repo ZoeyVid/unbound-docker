@@ -1,4 +1,4 @@
-FROM alpine:3.16.3 as build
+FROM alpine:20221110 as build
 
 ARG UNBOUND_VERSION=release-1.17.0
 
@@ -9,7 +9,7 @@ RUN apk add --no-cache git gcc musl-dev linux-headers ca-certificates openssl-de
     make
 RUN /src/unbound-anchor -a /src/root.key || if [ "$?" == "1" ]; then exit 0; else exit 1; fi
     
-FROM alpine:3.16.3
+FROM alpine:20221110
 RUN apk add --no-cache ca-certificates bind-tools
 
 COPY --from=build /src/unbound /usr/local/bin/unbound
