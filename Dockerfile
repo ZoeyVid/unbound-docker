@@ -3,7 +3,7 @@ FROM alpine:20221110 as build
 ARG UNBOUND_VERSION=release-1.17.0
 
 RUN apk upgrade --no-cache && \
-    apk add --no-cache git gcc musl-dev linux-headers ca-certificates openssl-dev expat-dev make openssl byacc && \
+    apk add --no-cache ca-certificates wget git make gcc byacc musl-dev openssl-dev expat-dev linux-headers && \
     git clone --recursive https://github.com/NLnetLabs/unbound --branch ${UNBOUND_VERSION} /src && \
     cd /src && \
     /src/configure && \
@@ -12,7 +12,7 @@ RUN /src/unbound-anchor -a /src/root.key || if [ "$?" == "1" ]; then exit 0; els
     
 FROM alpine:20221110
 RUN apk upgrade --no-cache
-RUN apk add --no-cache ca-certificates bind-tools
+RUN apk add --no-cache ca-certificates wget bind-tools
 
 COPY --from=build /src/unbound /usr/local/bin/unbound
 
