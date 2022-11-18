@@ -33,5 +33,5 @@ jobs:
 
       - name: show version
         run: | 
-         docker run --rm ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest -V
-         docker run --rm ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest -V
+         docker run --rm --entrypoint unbound ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest -V
+         docker run --rm --entrypoint unbound ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:latest -V
