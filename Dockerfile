@@ -9,18 +9,17 @@ RUN apk upgrade --no-cache && \
     /src/configure && \
     make
 RUN /src/unbound-anchor -a /src/root.key || if [ "$?" == "1" ]; then exit 0; else exit 1; fi
-    
+RUN wget https://www.internic.net/domain/named.root -O /src/root.hints
+
 FROM alpine:20221110
 RUN apk upgrade --no-cache
 RUN apk add --no-cache ca-certificates wget tzdata bind-tools
 
-COPY --from=build /src/unbound /usr/local/bin/unbound
+COPY --from=build /src/unbound    /usr/local/bin/unbound
 
-COPY unbound.conf /usr/local/etc/unbound/unbound.conf
-COPY --from=build /src/root.key /usr/local/etc/unbound/root.key
-RUN wget https://www.internic.net/domain/named.root -O /usr/local/etc/unbound/root.hints
+COPY --from=build /src/root.key   /usr/local/etc/unbound/root.key
+COPY --from=build /src/root.hints /usr/local/etc/unbound/root.hints
+COPY              unbound.conf    /usr/local/etc/unbound/unbound.conf
 
-LABEL org.opencontainers.image.source="https://github.com/SanCraftDev/unbound-docker"
-ENTRYPOINT ["unbound"]
-CMD ["-dd", "-c", "/usr/local/etc/unbound/unbound.conf"]
+ENTRYPOINT unbound -dd
 HEALTHCHECK CMD dig example.com @127.0.0.1 || exit 1
