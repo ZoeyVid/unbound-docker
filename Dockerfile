@@ -21,5 +21,5 @@ COPY --from=build /src/root.key   /usr/local/etc/unbound/root.key
 COPY --from=build /src/root.hints /usr/local/etc/unbound/root.hints
 COPY              unbound.conf    /usr/local/etc/unbound/unbound.conf
 
-ENTRYPOINT unbound -dd
+ENTRYPOINT ["unbound", "-dd"]
 HEALTHCHECK CMD dig example.com @127.0.0.1 || exit 1
