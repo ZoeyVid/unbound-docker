@@ -12,8 +12,8 @@ RUN /src/unbound-anchor -a /src/root.key || if [ "$?" == "1" ]; then exit 0; els
 RUN wget https://www.internic.net/domain/named.root -O /src/root.hints
 
 FROM alpine:20221110
-RUN apk upgrade --no-cache
-RUN apk add --no-cache ca-certificates wget tzdata bind-tools
+RUN apk upgrade --no-cache && \
+    apk add --no-cache ca-certificates wget tzdata bind-tools
 
 COPY --from=build /src/unbound    /usr/local/bin/unbound
 
