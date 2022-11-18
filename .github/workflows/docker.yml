@@ -62,8 +62,8 @@ jobs:
       - name: show version
         if: ${{ github.ref == 'refs/heads/develop' }}
         run: | 
-         docker run --rm ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:${{ github.ref_name }} -V
-         docker run --rm ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:${{ github.ref_name }} -V
+         docker run --rm --entrypoint unbound ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:${{ github.ref_name }} -V
+         docker run --rm --entrypoint unbound ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:${{ github.ref_name }} -V
 
       - name: Set PR-Number (PR)
         if: ${{ github.event_name == 'pull_request' }}
@@ -83,7 +83,7 @@ jobs:
       - name: show version (PR)
         if: ${{ github.event_name == 'pull_request' }}
         run: | 
-         docker run --rm ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:${{ steps.pr.outputs.pr }} -V
+         docker run --rm --entrypoint unbound ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}:${{ steps.pr.outputs.pr }} -V
           
       - name: add comment (PR)
         uses: mshick/add-pr-comment@v2
