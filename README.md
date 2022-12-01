@@ -10,9 +10,9 @@ services:
         ports:
         - "80:80/tcp" # http web
         - "443:443/tcp" # https web / DoH
-        - "443:443/udp" # https web (udp) / DoH3
-#        - "53:53/tcp" # plain DNS
-#        - "53:53/udp" # plain DNS
+        - "443:443/udp" # https web (HTTP/3-QUIC) / DoH3
+        - "127.0.0.1:53:53/tcp" # plain DNS
+        - "127.0.0.1:53:53/udp" # plain DNS
         - "853:853/tcp" # DNS-over-TLS
         - "853:853/udp" # DNS-over-QUIC
 #        - "784:784/udp" # DNS-over-QUIC
@@ -49,7 +49,7 @@ services:
 
     unbound:
         container_name: adguardhome-unbound
-        image: sancraftdev/unbound-docker
+        image: zoeyvid/unbound-docker
         restart: always
         dns:
         - 9.9.9.9
