@@ -8,5 +8,6 @@ elif [ $(dig example.com @127.0.0.1 | grep -E ".*\..*\..*\..*" | grep "example\.
 exit 0
 else
 echo "dig succeeded and failed, killing unbound..."
+kill $(cat /usr/local/etc/unbound/unbound.pid)
 exit 1
 fi
