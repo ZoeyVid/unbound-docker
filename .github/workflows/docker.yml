@@ -6,11 +6,13 @@ on:
       - develop
     paths:
       - unbound.conf
+      - health-check
       - Dockerfile
       - .github/workflows/docker.yml
   pull_request:
     paths:
       - unbound.conf
+      - health-check
       - Dockerfile
       - .github/workflows/docker.yml
   workflow_dispatch:
