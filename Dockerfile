@@ -1,6 +1,6 @@
 FROM alpine:20221110 as build
 
-ARG UNBOUND_VERSION=release-1.17.1rc1
+ARG UNBOUND_VERSION=release-1.17.1rc2
 
 RUN apk upgrade --no-cache && \
     apk add --no-cache ca-certificates wget tzdata git make gcc byacc musl-dev openssl-dev expat-dev linux-headers && \
