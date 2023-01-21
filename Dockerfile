@@ -16,7 +16,7 @@ COPY --from=build /src/unbound    /usr/local/bin/unbound
 COPY --from=build /src/root.key   /usr/local/etc/unbound/root.key
 COPY --from=build /src/root.hints /usr/local/etc/unbound/root.hints
 COPY              unbound.conf    /usr/local/etc/unbound/unbound.conf
-COPY              health-check    /usr/local/bin/health-check
+COPY              health-check.sh /usr/local/bin/health-check.sh
 
 ENV dns=94.140.14.14
 
@@ -25,4 +25,4 @@ RUN apk upgrade --no-cache && \
     chmod +x /usr/local/bin/health-check
 
 ENTRYPOINT ["unbound", "-dd"]
-HEALTHCHECK CMD health-check || exit 1
+HEALTHCHECK CMD health-check.sh || exit 1
