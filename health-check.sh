@@ -2,6 +2,7 @@
 
 # shellcheck disable=SC2154
 if [ "$(dig example.com @127.0.0.1 | grep -E ".*\..*\..*\..*" | grep "example\.com\." | head -n 1 | cut -f6)" != "$(dig example.com @"$dns" | grep -E ".*\..*\..*\..*" | grep "example\.com\." | head -n 1 | cut -f6)" ]; then
+# shellcheck enable=SC2154
 echo "dig failed, killing unbound..."
 kill "$(cat /usr/local/etc/unbound/unbound.pid)"
 exit 1
