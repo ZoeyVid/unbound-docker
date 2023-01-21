@@ -5,15 +5,15 @@ on:
     branches:    
       - develop
     paths:
-      - unbound.conf
-      - health-check
       - Dockerfile
+      - unbound.conf
+      - health-check.sh
       - .github/workflows/docker.yml
   pull_request:
     paths:
-      - unbound.conf
-      - health-check
       - Dockerfile
+      - unbound.conf
+      - health-check.sh
       - .github/workflows/docker.yml
   workflow_dispatch:
 
