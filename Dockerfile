@@ -22,7 +22,7 @@ ENV dns=94.140.14.14
 
 RUN apk upgrade --no-cache && \
     apk add --no-cache ca-certificates wget tzdata bind-tools && \
-    chmod +x /usr/local/bin/health-check
+    chmod +x /usr/local/bin/health-check.sh
 
 ENTRYPOINT ["unbound", "-dd"]
 HEALTHCHECK CMD health-check.sh || exit 1
