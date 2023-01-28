@@ -1,6 +1,9 @@
 #!/bin/sh
 
-# shellcheck disable=SC2154
+if [ -z "$dns" ]; then
+export dns=94.140.14.14
+fi
+
 if [ "$(dig example.com @127.0.0.1 | grep -E ".*\..*\..*\..*" | grep "example\.com\." | head -n 1 | cut -f6)" != "$(dig example.com @"$dns" | grep -E ".*\..*\..*\..*" | grep "example\.com\." | head -n 1 | cut -f6)" ]; then
 echo "dig failed, killing unbound..."
 kill "$(cat /usr/local/etc/unbound/unbound.pid)"
