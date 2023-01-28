@@ -18,8 +18,6 @@ COPY --from=build /src/root.hints /usr/local/etc/unbound/root.hints
 COPY              unbound.conf    /usr/local/etc/unbound/unbound.conf
 COPY              health-check.sh /usr/local/bin/health-check.sh
 
-ENV dns=94.140.14.14
-
 RUN apk upgrade --no-cache && \
     apk add --no-cache ca-certificates wget tzdata bind-tools && \
     chmod +x /usr/local/bin/health-check.sh
