@@ -1,4 +1,4 @@
-FROM alpine:20221110 as build
+FROM alpine:20230208 as build
 
 ARG UNBOUND_VERSION=release-1.17.1
 
@@ -11,7 +11,7 @@ RUN apk upgrade --no-cache && \
 RUN /src/unbound-anchor -a /src/root.key || if [ "$?" == "1" ]; then exit 0; else exit 1; fi
 RUN wget https://www.internic.net/domain/named.root -O /src/root.hints
 
-FROM alpine:20221110
+FROM alpine:20230208
 COPY --from=build /src/unbound    /usr/local/bin/unbound
 COPY --from=build /src/root.key   /usr/local/etc/unbound/root.key
 COPY --from=build /src/root.hints /usr/local/etc/unbound/root.hints
