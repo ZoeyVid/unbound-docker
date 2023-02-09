@@ -16,11 +16,10 @@ COPY --from=build /src/unbound    /usr/local/bin/unbound
 COPY --from=build /src/root.key   /usr/local/etc/unbound/root.key
 COPY --from=build /src/root.hints /usr/local/etc/unbound/root.hints
 COPY              unbound.conf    /usr/local/etc/unbound/unbound.conf
-COPY              health-check.sh /usr/local/bin/health-check.sh
+COPY --chmod=744  health-check.sh /usr/local/bin/health-check.sh
 
 RUN apk upgrade --no-cache && \
-    apk add --no-cache ca-certificates wget tzdata bind-tools && \
-    chmod +x /usr/local/bin/health-check.sh
+    apk add --no-cache ca-certificates wget tzdata bind-tools
 
 ENTRYPOINT ["unbound", "-dd"]
 HEALTHCHECK CMD health-check.sh || exit 1
