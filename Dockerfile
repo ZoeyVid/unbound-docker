@@ -3,7 +3,7 @@ FROM alpine:20230208 as build
 ARG UNBOUND_VERSION=release-1.17.1
 
 RUN apk upgrade --no-cache && \
-    apk add --no-cache ca-certificates wget tzdata git make gcc byacc musl-dev openssl-dev expat-dev linux-headers && \
+    apk add --no-cache ca-certificates wget tzdata git build-base linux-headers openssl-dev && \
     git clone --recursive https://github.com/NLnetLabs/unbound --branch ${UNBOUND_VERSION} /src && \
     cd /src && \
     /src/configure && \
