@@ -7,7 +7,8 @@ RUN apk upgrade --no-cache && \
     git clone --recursive https://github.com/NLnetLabs/unbound --branch ${UNBOUND_VERSION} /src && \
     cd /src && \
     /src/configure && \
-    make
+    make && \
+    strip -s /src/unbound
 RUN /src/unbound-anchor -a /src/root.key || if [ "$?" == "1" ]; then exit 0; else exit 1; fi
 RUN wget https://www.internic.net/domain/named.root -O /src/root.hints
 
