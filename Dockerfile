@@ -5,8 +5,7 @@ RUN apk upgrade --no-cache && \
     wget https://www.internic.net/domain/named.root -O /etc/unbound/root.hints && \
     unbound-anchor -a /etc/unbound/root.key || if [ "$?" == "1" ]; then exit 0; else exit 1; fi
 
-COPY unbound.conf    /etc/unbound/unbound.conf
-COPY health-check.sh /usr/local/bin/health-check.sh
+COPY unbound.conf /etc/unbound/unbound.conf
 
 ENTRYPOINT ["unbound", "-dd"]
 ENV dns=94.140.14.14
