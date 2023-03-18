@@ -9,4 +9,5 @@ COPY unbound.conf    /etc/unbound/unbound.conf
 COPY health-check.sh /usr/local/bin/health-check.sh
 
 ENTRYPOINT ["unbound", "-dd"]
+ENV dns=94.140.14.14
 HEALTHCHECK CMD health-check.sh || exit 1
