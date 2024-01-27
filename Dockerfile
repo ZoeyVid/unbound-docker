@@ -1,4 +1,4 @@
-FROM alpine:3.19.0
+FROM alpine:3.19.1
 
 RUN apk add --no-cache ca-certificates tzdata tini unbound bind-tools && \
     wget https://www.internic.net/domain/named.root -O /etc/unbound/root.hints && \
