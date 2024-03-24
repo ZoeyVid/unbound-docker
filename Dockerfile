@@ -1,6 +1,7 @@
 FROM alpine:3.19.1
 
-RUN apk add --no-cache ca-certificates tzdata tini unbound bind-tools && \
+RUN apk upgrade --no-cache -a && \
+    apk add --no-cache ca-certificates tzdata tini unbound bind-tools && \
     wget https://www.internic.net/domain/named.root -O /etc/unbound/root.hints && \
     unbound-anchor -a /etc/unbound/root.key || true && \
     chown -R nobody:nobody /etc/unbound
