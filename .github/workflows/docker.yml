@@ -76,7 +76,7 @@ jobs:
           tags: ghcr.io/${{ steps.un.outputs.un }}/${{ github.event.repository.name }}:${{ steps.pr.outputs.pr }}
       - name: show version (PR)
         if: ${{ github.event_name == 'pull_request' }}
-        run: "docker run --rm --entrypoint unbound ghcr.io/${{ steps.un.outputs.un }}/${{ github.event.repository.name }}:${{ steps.pr.outputs.pr }} -V\n \n"
+        run: "docker run --rm --entrypoint unbound ghcr.io/${{ steps.un.outputs.un }}/${{ github.event.repository.name }}:${{ steps.pr.outputs.pr }} -V"
       - name: add comment (PR)
         uses: mshick/add-pr-comment@v2
         if: ${{ github.event_name == 'pull_request' }}
